@@ -13,7 +13,7 @@ services:
       - ./data:/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer3.sertao.ifrs.edu.br`)"
+      - "traefik.http.routers.portainer.rule=Host(`portainer-template.sertao.ifrs.edu.br`)"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.tls"
