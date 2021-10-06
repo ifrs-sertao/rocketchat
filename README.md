@@ -15,6 +15,7 @@ Para rodar o docker-compose.yml e subir uma versão funcional do Rocket Chat é 
 
 ### Variáveis Ambiente
 O docker-compose chama um arquivo (env_file: env-rocket) que, nesse caso, precisa ser preenchido com as configurações básicas de acesso à plataforma. Por exemplo:
+
 ```bash
 ADMIN_USERNAME=admin_rocket
 ADMIN_PASS=senha_do_adm
@@ -23,6 +24,18 @@ ADMIN_EMAIL=mail@example.com
 ```
 
 > Aparentemente o usuário **admin** é previamente bloqueado na plataforma, portanto é necessário definir um nome de usuário diferente.
+
+### Usando variáveis ambiente para carregar configurações a partir do .ENV
+Para personalizar as variáveis precisamos do ID. Conseguimos isso de forma simples, inspecionando elementos da aplicação Web RocketChat, onde o nome da propriedade é esse ID que pode ser, inclusive, usado para sobrescrever as configurações logo no carregamento (execução docker-compose).
+
+```shell
+# Configurações SMTP que vão sobrescrever registros feitos pela Web
+OVERWRITE_SETTING_SMTP_Protocol=smtps
+OVERWRITE_SETTING_SMTP_Host=smtp.gmail.com
+OVERWRITE_SETTING_SMTP_Port=465
+
+```
+> Os nomes identificadores após OVERWRITE_SETTING_ foram obtidos inspecionando o HTML da aplicação.
 
 ### Executando o compose
 
