@@ -37,6 +37,11 @@ OVERWRITE_SETTING_SMTP_Port=465
 ```
 > Os nomes identificadores após OVERWRITE_SETTING_ foram obtidos inspecionando o HTML da aplicação.
 
+Refencias sobre ENVs RocketChat
+
+- [Managing Settings Using Environment Variables( Doc. oficial)](https://docs.rocket.chat/guides/administration/misc.-admin-guides/settings-via-env-vars)
+- [Environment Variable Setting Id’s(Forum)](https://forums.rocket.chat/t/environment-variable-setting-ids/1741)
+
 ### Executando o compose
 
 ```bash
