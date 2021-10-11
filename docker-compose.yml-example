@@ -1,0 +1,60 @@
+version: '3.4'
+
+services:    
+  rocketchat:
+    container_name: rocketchat
+    image: rocketchat/rocket.chat:4.0.0
+    command: "node main.js"
+    env_file: 
+      - .env-rocket
+    volumes:
+      - ./uploads:/app/uploads
+    ports:
+      - 3000:3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rocket-prod.rule=Host(`rocket.example.com`)"
+      - "traefik.http.services.rocket-prod.loadbalancer.server.port=3000"
+      - "traefik.http.routers.rocket-prod.entrypoints=websecure"
+      - "traefik.http.routers.rocket-prod.tls"
+    networks:
+      - traefik-net
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.2
+    restart: unless-stopped
+    volumes:
+      - mongodb-rocket:/data/db
+      - ./mongo-data-backup-volume:/data/backup
+      - ./mongo-dump:/data/dump
+    command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger --bind_ip_all
+    networks:
+      - traefik-net
+
+  mongo-init-replica:
+    image: mongo:4.2
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"    labels:
+      - "traefik.enable=false"
+    depends_on:
+      - mongo
+    networks:
+      - traefik-net
+
+volumes:
+  mongodb-rocket:
+    driver: local             
+networks:
+  traefik-net:
+     external: true
+

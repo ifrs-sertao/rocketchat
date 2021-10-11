@@ -3,16 +3,16 @@ version: '3.4'
 services:    
   rocketchat:
 
-    image: rocketchat/rocket.chat:4.0.0
+    image: rocketchat/rocke
+t.chat:4.0.0
     command: "node main.js"
-    env_file: .env-rocket
     environment:
       - PORT=3000
       - ROOT_URL=http://localhost:3000
       - MONGO_URL=mongodb://mongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-    volumes:
-      - ./uploads:/app/uploads
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASS=admin
     ports:
       - 3000:3000
     labels:
@@ -28,10 +28,11 @@ services:
     image: mongo:4.2
     restart: unless-stopped
     volumes:
-      - mongodb-rocket:/data/db
+      - mongo-data-rz:/data/db
       #- mongo-data-backup-volume:/data/backup
       #- mongo-data-dump:/data/dump
     command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger --bind_ip_all
+    #command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     networks:
       - traefik-net
 
@@ -55,7 +56,7 @@ services:
       - traefik-net
 
 volumes:
-  mongodb-rocket:
+  mongo-data-rz:
     driver: local             
  # mongo-data-backup-volume:
  #   driver: local             

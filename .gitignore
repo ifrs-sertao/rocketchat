@@ -1,1 +1,4 @@
 .env-rocket
+docker-compose.yml
+mongo-data-backup-volume/
+mongo-dump/
