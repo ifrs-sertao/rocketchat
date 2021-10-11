@@ -2,6 +2,10 @@
 Este projeto pode implementa o RocketChat 4.0.0 +Mongo 4.2 em com Docker-Compose atrás do proxy reverso Traefik, já com as configurações 
 do ICP Edu  do campus.
 
+## Requisitos
+- Docker e Docker-Compose
+- Traefik (opcional)
+
 ## Estrutura de arquivos e pastas
 
 - docker-compose.yml é o arquivo principal para construção da pilha de serviços. Nesse caso constrói o ambiente RocketChat usando imagens oficias do Rocket e do Mongo.
