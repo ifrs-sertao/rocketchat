@@ -1,5 +1,7 @@
-## RocketChat funcional por trás do proxy reverso Traefik 2.4 com Lets Encrypt
-Este projeto pode implementa o RocketChat 4.0.0 +Mongo 4.2 em com Docker-Compose atrás do proxy reverso Traefik, já com as configurações SSL com Lets Encrypt.
+## RocketChat funcional com configurações concentrada no arquivo .env-rocket
+Este projeto pode implementa o RocketChat 4.X +Mongo 4.2 em com Docker-Compose de modo que as configurações básicas, de LDAP, de SMTP e Omnichannel são carregadas automaticamente a partir do arquivo (env_file) .env-rocket.
+
+> Para tratar questões de domínio e certificado SSL, convém usar um serviço de proxy reverso. [Aqui um docker-compose para implementar o Traefik com Lets Encrypt](https://github.com/ifrs-sertao/traefik-letsencrypt).
 
 ## Requisitos
 - Docker e Docker-Compose
