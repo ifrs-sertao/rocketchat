@@ -62,3 +62,14 @@ A saída dos logs do compose deve chegar em:
 
 
 ```
+### Backup do banco Mongo em Docker
+É no banco que ficam todas as configurações e canais criados do Rocket Chat.
+
+#### Gerando o backup do mongo
+```shell
+docker exec mongo sh -c 'mongodump --archive' > db.dump
+```
+#### Restaurando o backup do mongo
+```shell
+docker-compose exec -T mongo sh -c 'mongorestore --archive' < db.dump
+```
